@@ -1,0 +1,12 @@
+Sometimes I work with experiment programs. 
+Will put them into this repository for references.
+
+bi_pipe_parent.c
+bi_pipe_child.c
+-- A sample code for implement bi-directional pipe, 
+eg, let the parent code be able to read the standard output and
+standard input of the child program. Just use two pipes, 
+ Pipe1 -- parent read, child write
+ pipe2 -- parent write, child read  
+To run the programe, use:
+ gcc -o parent bi_pipe_parent.c && gcc -o child bi_pipe_child.c && ./parent
