@@ -29,15 +29,18 @@ main()
 		int n;
 		if((n = read(fd1[0], tmp, 255)) < 0)
 			err_sys("read error");
+		write(1, "parent:", 7);
 		if(write(1, tmp, n) < 0)
 			err_sys("write error");
 	}else{ //child
-		close(0);
-		close(1);
+//		close(0);
+//		close(1);
 		close(fd[1]); //not write fd
 		close(fd1[0]); //not read fd1
-		dup2(fd[0], 0);
-		dup2(fd1[1], 1);
+		dup2(fd[0], STDIN_FILENO);//stdin closed first 
+		dup2(fd1[1], STDOUT_FILENO);//stdout closed first
+		close(fd[0]); 
+		close(fd1[1]);
 		if(execl("./child", NULL) < 0)
 			err_sys("exec error");
 	}
